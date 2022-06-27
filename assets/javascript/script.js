@@ -11,8 +11,8 @@ var generatedPassword = "";
 
 
 
-
-function numericalCheck() {
+// deals with user length input
+function passLengthCheck() {
   // get user input
   var lengthPassGen = prompt("Please enter your the length of the password, from 8 to 128 characters.");
 
@@ -30,7 +30,7 @@ function getRandomItem(arr) {
   // get random index value
   const randomIndex = Math.floor(Math.random() * arr.length);
 
-  // get random item
+  // get random item from array
   const item = arr[randomIndex];
 
   return item;
@@ -48,6 +48,12 @@ function uppercaseCheck () {
   return uppercaseGen
 }
 
+// returns numeric true/false check
+function numericalCheck() {
+  var numericalGen = confirm("Do you want numbers included in this password?")
+  return numericalGen
+}
+
 // returns symbolic true/false check
 function symbolCheck() {
   var symbolGen = confirm("Do you want symbols included in this password?")
@@ -59,7 +65,7 @@ function generatePassword() {
 
   //Ask user for password criteria
 
-  numericalGen = numericalCheck()
+  passLengthGen = passLengthCheck()
 
   if (uppercaseCheck() === true) {
     var uppercaseArray = uppercaseCriteria.split("")
@@ -76,8 +82,13 @@ function generatePassword() {
     passwordCriteria = passwordCriteria.concat(symbolArray)
   }
   
+  if (numericalCheck()) {
+    var numericalArray = numericalCriteria.split("")
+    passwordCriteria = passwordCriteria.concat(numericalArray)
+  }
+  
   //loop for how ever many times user inputted, and then get random array values to add to password
-  for (var i = 0; i < numericalGen; i++) {
+  for (var i = 0; i < passLengthGen; i++) {
     generatedPassword +=  getRandomItem(passwordCriteria.split(","))
   }
   // console.log(generatedPassword)
@@ -88,8 +99,9 @@ function generatePassword() {
 // Write the generated password to the #password input
 function writePassword() {
   var password = generatePassword();
+  passwordText.placeholder = "";
   passwordText.placeholder = password;
-
+  
 }
 
 // Add event listener to generate button
