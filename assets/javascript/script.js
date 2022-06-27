@@ -1,12 +1,13 @@
 // Assignment Code
 var generateBtn = document.querySelector("#generate");
-var lowercaseCriteria = "qwertyuiopasdfghjklzxcvbnm"
-var uppercaseCriteria = "QWERTYUIOPASDFGHJKLZXCVBNM"
-var numericalCriteria = "1234567890"
-var symbolCriteria = "`~!@#$%^&*()-_=+[{]};:',/?.>,<]`"
-var passwordCriteria = ""
-var passwordLength = 0
-var generatedPassword = ""
+var passwordText = document.querySelector("#password");
+var lowercaseCriteria = "qwertyuiopasdfghjklzxcvbnm";
+var uppercaseCriteria = "QWERTYUIOPASDFGHJKLZXCVBNM";
+var numericalCriteria = "1234567890";
+var symbolCriteria = "`~!@#$%^&*()-_=+[{]};:',/?.>,<]`";
+var passwordCriteria = "";
+var passwordLength = 0;
+var generatedPassword = "";
 
 
 
@@ -27,7 +28,7 @@ function numericalCheck() {
 function getRandomItem(arr) {
 
   // get random index value
-  const randomIndex = Math.floor(Math.random());
+  const randomIndex = Math.floor(Math.random() * arr.length);
 
   // get random item
   const item = arr[randomIndex];
@@ -37,13 +38,13 @@ function getRandomItem(arr) {
 
 // returns lowercase true/false check
 function lowercaseCheck () {
-  var lowercaseGen = confirm("Do you want lowercase letters included in this passowrd?")
+  var lowercaseGen = confirm("Do you want lowercase letters included in this password?")
   return lowercaseGen
 }
 
 // returns uppercase true/false check
 function uppercaseCheck () {
-  var uppercaseGen = confirm("Do you want uppercase letters included in this passowrd?")
+  var uppercaseGen = confirm("Do you want uppercase letters included in this password?")
   return uppercaseGen
 }
 
@@ -53,44 +54,41 @@ function symbolCheck() {
   return symbolGen
 }
 
+// main password generation function
 function generatePassword() {
 
   //Ask user for password criteria
 
   numericalGen = numericalCheck()
-  parseInt(numericalGen.value)
 
   if (uppercaseCheck() === true) {
-    var uppercaseArray = uppercaseCriteria.split()
+    var uppercaseArray = uppercaseCriteria.split("")
     passwordCriteria = passwordCriteria.concat(uppercaseArray) 
   }
 
   if (lowercaseCheck()) {
-    var lowercaseArray = lowercaseCriteria.split()
+    var lowercaseArray = lowercaseCriteria.split("")
     passwordCriteria = passwordCriteria.concat(lowercaseArray)
   }
 
   if (symbolCheck()) {
-    var symbolArray = symbolCriteria.split()
+    var symbolArray = symbolCriteria.split("")
     passwordCriteria = passwordCriteria.concat(symbolArray)
   }
-
-  for (i in numericalGen) {
-    generatedPassword +=  getRandomItem(passwordCriteria)
-    var test = 0
-    test++;
-    console.log("test")
+  
+  //loop for how ever many times user inputted, and then get random array values to add to password
+  for (var i = 0; i < numericalGen; i++) {
+    generatedPassword +=  getRandomItem(passwordCriteria.split(","))
   }
-  console.log(generatedPassword)
+  // console.log(generatedPassword)
+  return generatedPassword
 
 }
 
-// Write password to the #password input
+// Write the generated password to the #password input
 function writePassword() {
   var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
+  passwordText.placeholder = password;
 
 }
 
